@@ -82,7 +82,6 @@ Populate all `{placeholders}` with real data from the analysis. Remove sections 
 - **Revenues** (incremental revenues after X days since signup)
 - **CAC €** (cost per customer, new purchasers)
 - **1y pLTV €**:
-    - Gross Revenues with App Store Fees deducted.
     - Projection at 1y of the Net Revenues for each First Purchaser.
         - `sum(Gross Revenue - Chargeback + Chargeback Lift - Refund - Store commission (only apps) - VAT (only apps)) / sum(First Purchasers)`
 
