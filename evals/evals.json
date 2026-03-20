@@ -1,0 +1,149 @@
+[
+  {
+    "id": "basic-campaign-analysis",
+    "prompt": "I launched a Google Ads campaign on July 1st, 2024 that ran through September 30th. I have daily sales data from January through September, along with organic traffic and competitor sales as control metrics. The campaign cost $50,000 total. Help me measure the incremental impact using CausalImpact. The average order value is $120.",
+    "files": ["daily_sales_2024.csv"],
+    "expectations": [
+      "Uses CausalImpact library correctly",
+      "Defines pre_period as January-June and post_period as July-September",
+      "Includes appropriate control variables (organic traffic, competitor sales)",
+      "Calculates incremental sales with confidence intervals",
+      "Computes incremental ROAS using the $50,000 spend and $120 AOV",
+      "Provides statistical significance (p-value)",
+      "Creates visualization showing actual vs predicted",
+      "Interprets results in business context"
+    ]
+  },
+  {
+    "id": "multi-channel-comparison",
+    "prompt": "I need to compare the incrementality of three marketing channels: Google Ads ($50k spend), Meta Ads ($75k spend), and TikTok Ads ($25k). Each channel has its own campaign period and I want to know which delivers the best incremental ROAS to optimize my budget allocation. I have separate datasets for each channel with appropriate controls.",
+    "files": ["google_campaign.csv", "meta_campaign.csv", "tiktok_campaign.csv"],
+    "expectations": [
+      "Runs CausalImpact analysis separately for each channel",
+      "Calculates incremental ROAS for each channel",
+      "Creates a comparison visualization or table across channels",
+      "Accounts for different spend levels when comparing efficiency",
+      "Provides clear budget allocation recommendation based on results",
+      "Reports statistical significance for each channel",
+      "Explains which channel has highest incremental efficiency (revenue per $1k spent)"
+    ]
+  },
+  {
+    "id": "model-validation",
+    "prompt": "Before trusting my incrementality results, I want to validate that my CausalImpact model assumptions hold. I have a campaign that ran in August 2024. Help me check: (1) whether my control variables were affected by the intervention, (2) if the model fits well in the pre-period, and (3) run a placebo test on the pre-period to check for false positives.",
+    "files": ["campaign_with_controls.csv"],
+    "expectations": [
+      "Plots control variables across pre/post periods to check for contamination",
+      "Evaluates pre-period model fit (mentions R-squared or similar metric)",
+      "Runs a placebo test using only pre-period data with fake intervention date",
+      "Interprets placebo test p-value (should be > 0.05)",
+      "Checks residual autocorrelation or provides diagnostic plots",
+      "Provides clear validation summary stating whether assumptions hold",
+      "Recommends whether to trust the main analysis results"
+    ]
+  },
+  {
+    "id": "geographic-holdout",
+    "prompt": "I want to run a geographic holdout test. I'll exclude paid marketing from two test cities (Austin and Portland) while keeping it running in two control cities (Seattle and Denver). Help me design and analyze this experiment to measure the incremental impact of the marketing campaigns. The test runs for 8 weeks starting March 1st, 2024.",
+    "files": ["geographic_sales_data.csv"],
+    "expectations": [
+      "Explains that test regions should show NEGATIVE effect (miss out on lift)",
+      "Uses control region sales as synthetic control for test regions",
+      "Defines proper pre-period (before March 1st) and post-period (March 1 - April 25)",
+      "Configures CausalImpact correctly for geographic holdout design",
+      "Interprets the negative effect as the incremental value of marketing",
+      "Discusses whether the effect is statistically significant",
+      "Provides estimate of what would happen if marketing was paused nationwide"
+    ]
+  },
+  {
+    "id": "sensitivity-analysis",
+    "prompt": "I have multiple potential control variables (organic traffic, competitor sales, seasonality index, weather index) and I'm not sure which combination to use. Run a sensitivity analysis to test how robust my incrementality estimate is across different control variable specifications.",
+    "files": ["sales_with_multiple_controls.csv"],
+    "expectations": [
+      "Tests multiple combinations of control variables",
+      "Runs CausalImpact with each control set",
+      "Compares effect estimates across specifications",
+      "Reports range of incremental effect estimates",
+      "Assesses whether results are robust or sensitive to control choice",
+      "Recommends a preferred specification with justification",
+      "Creates table or visualization comparing sensitivity results"
+    ]
+  },
+  {
+    "id": "attribution-comparison",
+    "prompt": "My Google Ads dashboard shows $500,000 in attributed revenue (last-click attribution), but I suspect this overstates the true incremental impact. I ran a holdout test and have the data to measure true incrementality. Help me compare the platform attribution to the causal impact and calculate the attribution inflation factor.",
+    "files": ["holdout_test_data.csv"],
+    "expectations": [
+      "Runs CausalImpact to measure true incremental revenue",
+      "Compares incremental revenue to the $500k platform attribution",
+      "Calculates attribution inflation factor (platform / incremental)",
+      "Explains the difference between correlation and causation",
+      "Provides incremental ROAS using true incremental revenue",
+      "Discusses implications for marketing measurement and optimization",
+      "Visualizes the comparison between attributed and incremental revenue"
+    ]
+  },
+  {
+    "id": "time-varying-effects",
+    "prompt": "I want to understand how the campaign impact evolved over time. Did it have immediate effects or delayed effects? Did it diminish over time due to saturation? Split the 12-week campaign period into 3 four-week windows and analyze how the daily incremental effect changed across these periods.",
+    "files": ["campaign_timeseries.csv"],
+    "expectations": [
+      "Splits post-period into multiple time windows",
+      "Runs separate CausalImpact analysis for each window",
+      "Calculates daily incremental effect for each period",
+      "Compares effect magnitude across windows",
+      "Identifies whether effects are immediate, delayed, or show saturation",
+      "Creates visualization showing effect evolution over time",
+      "Provides interpretation about campaign dynamics and implications"
+    ]
+  },
+  {
+    "id": "insufficient-data-diagnosis",
+    "prompt": "I have 2 weeks of pre-campaign data and want to measure the impact of a 4-week campaign. Is this enough data? What problems might I encounter and what should I do about it?",
+    "files": null,
+    "expectations": [
+      "Identifies that 2 weeks pre-period is insufficient for 4 week post-period",
+      "Explains the rule of thumb (3x post-period length for pre-period)",
+      "Discusses problems: poor model fit, high uncertainty, unreliable estimates",
+      "Recommends either extending pre-period or shortening post-period",
+      "Suggests alternative approaches if data constraints cannot be resolved",
+      "Mentions that results will have very wide confidence intervals",
+      "Does NOT proceed with analysis given the insufficient data"
+    ]
+  },
+  {
+    "id": "progressive-budget-ramp",
+    "prompt": "I'm running a Google Ads campaign where I started with €200/day on July 1st, then increased to €400/day on July 15th, €600/day on August 1st, and €800/day on August 15th. I want to measure the incremental impact and understand if I'm seeing diminishing returns. I have daily sales data from January through September, with organic traffic and competitor sales as controls.",
+    "files": ["progressive_spend_data.csv"],
+    "expectations": [
+      "FIRST asks about intervention type and recognizes this as progressive/gradual change",
+      "Presents the 3-4 analysis options (Dose-Response, Phase-by-Phase, Covariate, Discrete)",
+      "Recommends Option 1 (Dose-Response) or Option 3 (Phase-by-Phase) with clear reasoning",
+      "Explains advantages of recommended approach for this specific case",
+      "Waits for user confirmation before proceeding with analysis",
+      "If using dose-response: includes daily_spend as a predictor variable",
+      "If using phase-by-phase: analyzes marginal effect of each budget increase",
+      "Discusses diminishing returns based on results",
+      "Calculates incremental ROAS that accounts for varying spend levels",
+      "Provides recommendation on optimal budget level based on marginal returns"
+    ]
+  },
+  {
+    "id": "geographic-rollout-phases",
+    "prompt": "We launched our campaign in Madrid on July 1st with €1000/day spend. Then on July 8th we added Barcelona with an additional €800/day. On July 15th we added Valencia with €600/day. And on July 22nd we went nationwide with €2000/day total. I want to see which expansion generated the most incremental value per euro spent.",
+    "files": ["geo_rollout_data.csv"],
+    "expectations": [
+      "Identifies this as a phased geographic rollout (stepped intervention)",
+      "Presents analysis options and recommends Option 3 (Phase-by-Phase)",
+      "Explains that each phase will show the marginal impact of adding that geography",
+      "Confirms approach with user before proceeding",
+      "Defines 4 clear phases with appropriate pre/post periods",
+      "For each phase, uses cumulative prior phases as baseline",
+      "Calculates incremental sales per euro for each geographic expansion",
+      "Identifies which geography had highest efficiency (sales per €)",
+      "Shows diminishing returns if present across phases",
+      "Provides visualization or table comparing phase performance"
+    ]
+  }
+]

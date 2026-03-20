@@ -1,0 +1,17 @@
+# Secrets & local config
+.env
+.mcp.json
+settings.local.json
+
+# Potential Sensitive files
+analysis
+incrementality-learnings.md
+enhancements-ideas.txt
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# macOS
+.DS_Store
